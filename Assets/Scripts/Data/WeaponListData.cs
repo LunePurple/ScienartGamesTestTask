@@ -12,7 +12,8 @@ namespace Data
 
         public int GetWeaponDataIndex(WeaponData weaponData)
         {
-            return Weapons.IndexOf(weaponData);
+            int index = Weapons.IndexOf(weaponData);
+            return index != -1 ? index : 0; // fallback index
         }
         
         public bool TryGetWeaponDataFromIndex(int weaponDataIndex, out WeaponData? weaponData)

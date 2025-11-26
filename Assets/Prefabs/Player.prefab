@@ -313,6 +313,7 @@ GameObject:
   - component: {fileID: 6928538816370671460}
   - component: {fileID: 7109967384903017308}
   - component: {fileID: 8882608487827537058}
+  - component: {fileID: 3884182868043158916}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -349,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1302513146
+  GlobalObjectIdHash: 2774888174
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -420,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e3b5813ec345a69e20e753cfb07eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputProvider
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &8882608487827537058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,11 +434,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a61e80e9cf9a840bf7dd398a141244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  ShowTopMostFoldoutHeaderGroup: 1
   Config: {fileID: 11400000, guid: 67903864a8e236945882295706f33b94, type: 2}
   Head: {fileID: 5220653094131999052}
   CollisionLayerMask:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &3884182868043158916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839734783935861333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010fdca8b74d4f658dc03c4d8a112b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  ShowTopMostFoldoutHeaderGroup: 1
+  Config: {fileID: 11400000, guid: 67903864a8e236945882295706f33b94, type: 2}
+  Head: {fileID: 5220653094131999052}
+  InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  WeaponList: {fileID: 11400000, guid: 98331e8fc54ab9940881ec072bad5bb4, type: 2}
 --- !u!1 &8417533351245956742
 GameObject:
   m_ObjectHideFlags: 0

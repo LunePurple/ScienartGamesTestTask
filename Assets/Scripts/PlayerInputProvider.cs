@@ -1,15 +1,23 @@
 #nullable enable
 
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerInputProvider : MonoBehaviour
+public class PlayerInputProvider : NetworkBehaviour
 {
     private InputActions _inputs = null!;
 
     private void Awake()
     {
         _inputs = new InputActions();
-        _inputs.Enable();
+    }
+    
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            _inputs.Enable();
+        }
     }
 
     public Vector2 GetMovementVectorNormalized()

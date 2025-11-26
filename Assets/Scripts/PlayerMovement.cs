@@ -1,9 +1,10 @@
 #nullable enable
 
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputProvider))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private PlayerConfig Config = null!;
     [Space]
@@ -27,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
+        
         HandleLookDirection();
         HandleMovement();
     }

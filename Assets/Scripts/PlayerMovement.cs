@@ -1,5 +1,6 @@
 #nullable enable
 
+using Data;
 using Unity.Netcode;
 using UnityEngine;
 

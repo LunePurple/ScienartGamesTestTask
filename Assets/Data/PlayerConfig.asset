@@ -18,3 +18,4 @@ MonoBehaviour:
   GroundCheckDistance: 0.05
   LookRotationSpeedX: 75
   LookRotationSpeedY: 75
+  InteractionDistance: 3

@@ -12,31 +12,29 @@ public class PlayerInputProvider : NetworkBehaviour
     public event Action OnUseAction = delegate { };
     
     private InputActions _inputs = null!;
-
-    private void Awake()
+    
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner) return;
+
         _inputs = new InputActions();
         
         _inputs.PlayerInteraction.Pickup.performed += Inputs_Pickup_Performed;
         _inputs.PlayerInteraction.Select.performed += Inputs_Select_Performed;
         _inputs.PlayerInteraction.Use.performed += Inputs_Use_Performed;
+            
+        _inputs.Enable();
     }
-    
-    public override void OnDestroy()
+
+    public override void OnNetworkDespawn()
     {
+        if (!IsOwner) return;
+
         _inputs.PlayerInteraction.Pickup.performed -= Inputs_Pickup_Performed;
         _inputs.PlayerInteraction.Select.performed -= Inputs_Select_Performed;
         _inputs.PlayerInteraction.Use.performed -= Inputs_Use_Performed;
-
-        base.OnDestroy();
-    }
-    
-    public override void OnNetworkSpawn()
-    {
-        if (IsOwner)
-        {
-            _inputs.Enable();
-        }
+        
+        _inputs.Dispose();
     }
 
     public Vector2 GetMovementVectorNormalized()

@@ -12,7 +12,7 @@ namespace Data
         public float AttackRadius;
         public float AttackDistance;
 
-        public override WeaponBehaviour CreateInstance()
+        public override Weapon CreateInstance()
         {
             return new Sword(this);
         }

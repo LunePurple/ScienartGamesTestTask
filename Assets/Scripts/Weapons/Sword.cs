@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public class Sword : WeaponBehaviour
+    public class Sword : Weapon
     {
         private readonly Collider[] _hits = new Collider[10];
 

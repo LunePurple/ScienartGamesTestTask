@@ -4,7 +4,7 @@ using Data;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Weapon : NetworkBehaviour
+public class Pickable : NetworkBehaviour
 {
     [SerializeField] private WeaponData Data = null!;
 

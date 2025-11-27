@@ -17,7 +17,7 @@ public class PlayerInteraction : NetworkBehaviour
 
     private PlayerInputProvider _inputProvider = null!;
 
-    private WeaponBehaviour? _currentWeapon;
+    private Weapon? _currentWeapon;
     
     private readonly NetworkVariable<int> _currentWeaponDataIndex = new NetworkVariable<int>();
 
@@ -50,7 +50,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (Physics.Raycast(Head.position, Head.forward, out RaycastHit hit, Config.InteractionDistance,
                 InteractionLayerMask))
         {
-            if (hit.transform.TryGetComponent(out Weapon pickable))
+            if (hit.transform.TryGetComponent(out Pickable pickable))
             {
                 if (pickable.TryPickup(out WeaponData? weaponData))
                 {

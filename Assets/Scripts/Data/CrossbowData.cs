@@ -10,7 +10,7 @@ namespace Data
     {
         public GameObject ArrowPrefab = null!;
 
-        public override WeaponBehaviour CreateInstance()
+        public override Weapon CreateInstance()
         {
             return new Crossbow(this);
         }

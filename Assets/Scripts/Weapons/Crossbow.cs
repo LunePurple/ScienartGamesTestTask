@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public class Crossbow : WeaponBehaviour
+    public class Crossbow : Weapon
     {
         public Crossbow(CrossbowData data) : base(data) { }
 

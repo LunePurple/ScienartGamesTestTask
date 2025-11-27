@@ -9,6 +9,6 @@ namespace Data
     {
         public LayerMask TargetLayerMask;
 
-        public abstract WeaponBehaviour CreateInstance();
+        public abstract Weapon CreateInstance();
     }
 }

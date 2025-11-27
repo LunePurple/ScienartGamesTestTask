@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public abstract class WeaponBehaviour
+    public abstract class Weapon
     {
         protected readonly WeaponData Data;
 
-        protected WeaponBehaviour(WeaponData data)
+        protected Weapon(WeaponData data)
         {
             Data = data;
         }

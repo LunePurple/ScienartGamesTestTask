@@ -3,6 +3,7 @@
 using Data;
 using Unity.Netcode;
 using UnityEngine;
+using Weapons;
 
 public class PlayerInteraction : NetworkBehaviour
 {
@@ -12,10 +13,13 @@ public class PlayerInteraction : NetworkBehaviour
     [SerializeField] private LayerMask InteractionLayerMask;
     [Space]
     [SerializeField] private WeaponListData WeaponList = null!;
+    [SerializeField] private Transform WeaponHoldPoint = null!;
 
     private PlayerInputProvider _inputProvider = null!;
 
-    private readonly NetworkVariable<int> _weaponIndex = new NetworkVariable<int>();
+    private WeaponBehaviour? _currentWeapon;
+    
+    private readonly NetworkVariable<int> _currentWeaponDataIndex = new NetworkVariable<int>();
 
     private void Awake()
     {
@@ -46,14 +50,11 @@ public class PlayerInteraction : NetworkBehaviour
         if (Physics.Raycast(Head.position, Head.forward, out RaycastHit hit, Config.InteractionDistance,
                 InteractionLayerMask))
         {
-            if (hit.transform.TryGetComponent(out Weapon weapon))
+            if (hit.transform.TryGetComponent(out Weapon pickable))
             {
-                int index = WeaponList.GetWeaponDataIndex(weapon.WeaponData);
-                EquipWeaponWithIndex(index);
-                
-                if (weapon.TryGetComponent(out NetworkObject networkObject))
-                { 
-                    networkObject.Despawn();
+                if (pickable.TryPickup(out WeaponData? weaponData))
+                {
+                    EquipWeaponServer(weaponData);
                 }
             }
         }
@@ -62,21 +63,28 @@ public class PlayerInteraction : NetworkBehaviour
     [ServerRpc]
     private void AttemptUseSelectedWeaponServerRpc()
     {
-        if (WeaponList.TryGetWeaponDataFromIndex(_weaponIndex.Value, out WeaponData? weaponData))
+        _currentWeapon?.Attack(OwnerClientId, WeaponHoldPoint.position, Head.forward, () =>
         {
-            weaponData?.Attack();
-            EquipWeaponWithIndex();
-        }
+            EquipWeaponServer();
+        });
     }
 
-    private void EquipWeaponWithIndex(int newWeaponIndex = 0)
+    private void EquipWeaponServer(WeaponData? data = null)
     {
-        _weaponIndex.Value = newWeaponIndex;
+        if (data is null)
+        {
+            _currentWeapon = null;
+            _currentWeaponDataIndex.Value = -1;
+        }
+        else
+        {
+            _currentWeapon = data.CreateInstance();
+            _currentWeaponDataIndex.Value = WeaponList.GetWeaponDataIndex(data);
+        }
         
-        WeaponList.TryGetWeaponDataFromIndex(_weaponIndex.Value, out WeaponData? newData);
         Debug.Log($"Changing weapon... " +
-                  $"Weapon:{newData?.name}; " +
-                  $"WeaponId:{_weaponIndex.Value};");
+                  $"Weapon:{data?.name}; " +
+                  $"WeaponId:{_currentWeaponDataIndex.Value};");
     }
 
     private void InputProvider_OnPickupAction()

@@ -11,6 +11,9 @@ namespace Data
         public float Height;
         public float Radius;
 
+        [Space]
+        public int MaxHealth;
+
         [Header("Movement")]
         public float WalkSpeed;
 

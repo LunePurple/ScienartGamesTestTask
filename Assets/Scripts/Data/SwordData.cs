@@ -1,15 +1,20 @@
 #nullable enable
 
 using UnityEngine;
+using Weapons;
 
 namespace Data
 {
     [CreateAssetMenu(menuName = "Data/Weapons/SwordData", fileName = "newSword")]
     public class SwordData : WeaponData
     {
-        public override void Attack()
+        public int Damage;
+        public float AttackRadius;
+        public float AttackDistance;
+
+        public override WeaponBehaviour CreateInstance()
         {
-            Debug.Log("Sword attack!");
+            return new Sword(this);
         }
     }
 }

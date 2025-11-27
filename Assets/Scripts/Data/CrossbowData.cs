@@ -1,15 +1,18 @@
 #nullable enable
 
 using UnityEngine;
+using Weapons;
 
 namespace Data
 {
     [CreateAssetMenu(menuName = "Data/Weapons/CrossbowData", fileName = "newCrossbow")]
     public class CrossbowData : WeaponData
     {
-        public override void Attack()
+        public GameObject ArrowPrefab = null!;
+
+        public override WeaponBehaviour CreateInstance()
         {
-            Debug.Log("Crossbow attack!");
+            return new Crossbow(this);
         }
     }
 }

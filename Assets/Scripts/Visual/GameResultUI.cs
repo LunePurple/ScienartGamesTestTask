@@ -18,13 +18,13 @@ namespace Visual
             LostPanel.SetActive(false);
             
             GameStateHandler.OnGameStateChanged += GameStateHandler_OnGameStateChanged;
-            Health.OnPlayerDeath += Health_OnPlayerDeath;
+            GameStateHandler.OnPlayerLose += GameStateHandler_OnPlayerLose;
         }
 
         private void OnDestroy()
         {
             GameStateHandler.OnGameStateChanged -= GameStateHandler_OnGameStateChanged;
-            Health.OnPlayerDeath -= Health_OnPlayerDeath;
+            GameStateHandler.OnPlayerLose -= GameStateHandler_OnPlayerLose;
         }
         
         private void GameStateHandler_OnGameStateChanged(GameStateHandler.GameState state)
@@ -32,7 +32,7 @@ namespace Visual
             ResultPanel.SetActive(state is GameStateHandler.GameState.Result);
         }
         
-        private void Health_OnPlayerDeath(ulong clientId)
+        private void GameStateHandler_OnPlayerLose(ulong clientId)
         {
             ulong localClientId = NetworkManager.Singleton.LocalClientId;
             

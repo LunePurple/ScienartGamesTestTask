@@ -15,6 +15,7 @@ public class GameStateHandler : NetworkBehaviour
     }
 
     public static event Action<GameState> OnGameStateChanged = delegate { };
+    public static event Action<ulong> OnPlayerLose = delegate { };
 
     [SerializeField] private GameConfig Config = null!;
 
@@ -52,11 +53,18 @@ public class GameStateHandler : NetworkBehaviour
         _currentGameState.Value = GameState.Game;
     }
 
-    private void StopGameServer()
+    private void AttemptStopGameServer(ulong deadPlayerClientId)
     {
         if (_currentGameState.Value != GameState.Game) return;
         
         _currentGameState.Value = GameState.Result;
+        NotifyPlayerLoseClientRpc(deadPlayerClientId);
+    }
+
+    [ClientRpc]
+    private void NotifyPlayerLoseClientRpc(ulong deadPlayerClientId)
+    {
+        OnPlayerLose.Invoke(deadPlayerClientId);
     }
     
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)
@@ -71,6 +79,6 @@ public class GameStateHandler : NetworkBehaviour
     
     private void Health_OnPlayerDeath(ulong clientId)
     {
-        StopGameServer();
+        AttemptStopGameServer(clientId);
     }
 }

@@ -14,8 +14,6 @@ public class PlayerMovement : NetworkBehaviour
 
     private PlayerInputProvider _inputProvider = null!;
     
-    private float _yaw;
-    private float _pitch;
     private bool _grounded;
     private float _verticalVelocity;
 
@@ -34,17 +32,20 @@ public class PlayerMovement : NetworkBehaviour
         HandleLookDirection();
         HandleMovement();
     }
-    
+
     private void HandleLookDirection()
     {
         Vector2 look = _inputProvider.GetLookVector();
         
-        _yaw += look.x * Config.LookRotationSpeedX * Time.deltaTime;
-        _pitch -= look.y * Config.LookRotationSpeedY * Time.deltaTime;
-        _pitch = Mathf.Clamp(_pitch, -90f, 90f);
+        transform.rotation *= Quaternion.AngleAxis(look.x * Config.LookRotationSpeedX * Time.deltaTime, Vector3.up);
+        Head.localRotation *= Quaternion.AngleAxis(-look.y * Config.LookRotationSpeedY * Time.deltaTime, Vector3.right);
         
-        transform.rotation = Quaternion.Euler(0f, _yaw, 0f);
-        Head.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
+        Head.localRotation.ToAngleAxis(out float angle, out Vector3 axis);
+        
+        if (angle > 180) angle -= 360;
+
+        float clamped = Mathf.Clamp(angle, -90f, 90f);
+        Head.localRotation = Quaternion.AngleAxis(clamped, axis);
     }
 
     private void HandleMovement()

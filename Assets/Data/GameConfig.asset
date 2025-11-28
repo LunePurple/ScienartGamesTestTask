@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::Data.GameConfig
   MaxPlayers: 2
+  ReturnToMenuAfterSeconds: 3

@@ -59,12 +59,23 @@ public class GameStateHandler : NetworkBehaviour
         
         _currentGameState.Value = GameState.Result;
         NotifyPlayerLoseClientRpc(deadPlayerClientId);
+        
+        Invoke(nameof(ReturnToMenuClientRpc), Config.ReturnToMenuAfterSeconds);
     }
 
     [ClientRpc]
     private void NotifyPlayerLoseClientRpc(ulong deadPlayerClientId)
     {
         OnPlayerLose.Invoke(deadPlayerClientId);
+    }
+    
+    [ClientRpc]
+    private void ReturnToMenuClientRpc()
+    {
+        Loader.Load(Loader.Scene.Menu, () =>
+        {
+            NetworkManager.Singleton.Shutdown();
+        });
     }
     
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)

@@ -8,5 +8,6 @@ namespace Data
     public class GameConfig : ScriptableObject
     {
         public int MaxPlayers;
+        public float ReturnToMenuAfterSeconds;
     }
 }

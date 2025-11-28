@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   Height: 1.86
   Radius: 0.25
+  MaxHealth: 100
   WalkSpeed: 7
   GroundCheckDistance: 0.05
   LookRotationSpeedX: 75

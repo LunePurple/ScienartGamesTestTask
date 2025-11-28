@@ -26,7 +26,7 @@ namespace Weapons
                 {
                     if (health.NetworkObject.IsPlayerObject && health.OwnerClientId == attackerClientId) continue;
 
-                    health.TakeDamage(swordData.Damage);
+                    health.TakeDamageServer(swordData.Damage);
                 }
             }
 

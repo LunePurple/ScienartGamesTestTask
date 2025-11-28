@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 3610750942391920398}
   - component: {fileID: 2602667604890598482}
   - component: {fileID: 4912084175746015252}
+  - component: {fileID: 2416404178172569885}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -300,6 +301,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2416404178172569885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052178381708179564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35120fa33964a7a938032aa988abbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Visual.PlayerVisual
 --- !u!1 &4717221222027236721
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2774888174
+  GlobalObjectIdHash: 1302513146
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -604,7 +617,6 @@ MonoBehaviour:
   InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  WeaponList: {fileID: 11400000, guid: 98331e8fc54ab9940881ec072bad5bb4, type: 2}
   WeaponHoldPoint: {fileID: 4316077262124518805}
 --- !u!1 &6053243897884080751
 GameObject:

@@ -21,6 +21,8 @@ public class Health : NetworkBehaviour
 
     public static event Action<HealthChangedData> OnLocalPlayerHealthChanged = delegate { };
     public static event Action<ulong> OnPlayerDeath = delegate { };
+    
+    public static HealthChangedData LastLocalPlayerHealthChangedData { get; private set; }
 
     [SerializeField] private PlayerConfig Config = null!;
 
@@ -87,6 +89,7 @@ public class Health : NetworkBehaviour
 
     private void Health_OnValueChanged(int previousValue, int newValue)
     {
-        OnLocalPlayerHealthChanged.Invoke(new HealthChangedData(newValue, Config.MaxHealth));
+        LastLocalPlayerHealthChangedData = new HealthChangedData(newValue, Config.MaxHealth);
+        OnLocalPlayerHealthChanged.Invoke(LastLocalPlayerHealthChangedData);
     }
 }

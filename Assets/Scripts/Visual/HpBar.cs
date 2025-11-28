@@ -14,6 +14,7 @@ namespace Visual
         private void Start()
         {
             Health.OnLocalPlayerHealthChanged += Health_OnLocalPlayerHealthChanged;
+            UpdateVisual(Health.LastLocalPlayerHealthChangedData);
         }
 
         private void OnDestroy()

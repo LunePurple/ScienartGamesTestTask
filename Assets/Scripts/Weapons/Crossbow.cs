@@ -3,6 +3,7 @@
 using System;
 using Data;
 using UnityEngine;
+using Weapons.Projectiles;
 
 namespace Weapons
 {
@@ -14,6 +15,11 @@ namespace Weapons
             Action? onWeaponDestroy = null)
         {
             Debug.Log("Crossbow attack!");
+
+            CrossbowData crossbowData = (CrossbowData)Data;
+            ProjectileSpawner.Instance?.SpawnProjectileServer(crossbowData.ProjectileData, holdPoint, 
+                lookDir, Data.TargetLayerMask, attackerClientId);
+
             onWeaponDestroy?.Invoke();
         }
     }

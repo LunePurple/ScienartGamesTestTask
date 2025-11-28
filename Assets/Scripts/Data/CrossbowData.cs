@@ -8,7 +8,7 @@ namespace Data
     [CreateAssetMenu(menuName = "Data/Weapons/CrossbowData", fileName = "newCrossbow")]
     public class CrossbowData : WeaponData
     {
-        public GameObject ArrowPrefab = null!;
+        public ProjectileData ProjectileData = null!;
 
         public override Weapon CreateInstance()
         {

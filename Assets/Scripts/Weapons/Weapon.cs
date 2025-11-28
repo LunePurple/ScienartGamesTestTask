@@ -15,6 +15,7 @@ namespace Weapons
             Data = data;
         }
 
-        public abstract void Attack(ulong attackerClientId, Vector3 holdPoint, Vector3 lookDir, Action onWeaponDestroy);
+        public abstract void Attack(ulong attackerClientId, Vector3 holdPoint, Vector3 lookDir,
+            Action? onWeaponDestroy = null);
     }
 }

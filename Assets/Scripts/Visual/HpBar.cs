@@ -24,6 +24,8 @@ namespace Visual
 
         private void UpdateVisual(Health.HealthChangedData data)
         {
+            if (data.Max == 0) return;
+            
             Slider.value = (float)data.Current / data.Max;
             Text.text = data.Current.ToString();
         }

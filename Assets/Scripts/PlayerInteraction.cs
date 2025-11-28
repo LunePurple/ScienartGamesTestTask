@@ -12,18 +12,18 @@ public class PlayerInteraction : NetworkBehaviour
     [SerializeField] private Transform Head = null!;
     [SerializeField] private LayerMask InteractionLayerMask;
     [Space]
-    [SerializeField] private WeaponListData WeaponList = null!;
     [SerializeField] private Transform WeaponHoldPoint = null!;
 
     private PlayerInputProvider _inputProvider = null!;
 
-    private Weapon? _currentWeapon;
-    
-    private readonly NetworkVariable<int> _currentWeaponDataIndex = new NetworkVariable<int>();
+    private Inventory<Weapon>? _inventory;
+
+    private readonly NetworkVariable<int> _selectedInventorySlotIndex = new NetworkVariable<int>();
 
     private void Awake()
     {
         _inputProvider = GetComponent<PlayerInputProvider>();
+        _inventory = new Inventory<Weapon>(Config.InventorySize);
     }
 
     public override void OnNetworkSpawn()
@@ -47,44 +47,38 @@ public class PlayerInteraction : NetworkBehaviour
     [ServerRpc]
     private void AttemptPickupWeaponServerRpc()
     {
+        if (_inventory == null || !_inventory.HasEmptySlot(out _)) return;
+        
         if (Physics.Raycast(Head.position, Head.forward, out RaycastHit hit, Config.InteractionDistance,
                 InteractionLayerMask))
         {
             if (hit.transform.TryGetComponent(out Pickable pickable))
             {
-                if (pickable.TryPickup(out WeaponData? weaponData))
+                pickable.AttemptPickup(data =>
                 {
-                    EquipWeaponServer(weaponData);
-                }
+                    _inventory?.TryPickupItem(data.CreateInstance());
+                });
             }
         }
     }
 
     [ServerRpc]
-    private void AttemptUseSelectedWeaponServerRpc()
+    private void ChangeSelectedSlotServerRpc(int slotNumber)
     {
-        _currentWeapon?.Attack(OwnerClientId, WeaponHoldPoint.position, Head.forward, () =>
-        {
-            EquipWeaponServer();
-        });
+        _selectedInventorySlotIndex.Value = slotNumber - 1;
+        Debug.Log($"Selecting slot #{slotNumber}");
     }
 
-    private void EquipWeaponServer(WeaponData? data = null)
+    [ServerRpc]
+    private void AttemptUseSelectedWeaponServerRpc()
     {
-        if (data is null)
+        if (_inventory != null && _inventory.TryGetFromSlot(_selectedInventorySlotIndex.Value, out Weapon? weapon))
         {
-            _currentWeapon = null;
-            _currentWeaponDataIndex.Value = -1;
+            weapon?.Attack(OwnerClientId, WeaponHoldPoint.position, Head.forward, () =>
+            {
+                _inventory.TryRemoveFromSlot(_selectedInventorySlotIndex.Value);
+            });
         }
-        else
-        {
-            _currentWeapon = data.CreateInstance();
-            _currentWeaponDataIndex.Value = WeaponList.GetWeaponDataIndex(data);
-        }
-        
-        Debug.Log($"Changing weapon... " +
-                  $"Weapon:{data?.name}; " +
-                  $"WeaponId:{_currentWeaponDataIndex.Value};");
     }
 
     private void InputProvider_OnPickupAction()
@@ -94,7 +88,7 @@ public class PlayerInteraction : NetworkBehaviour
 
     private void InputProvider_OnSelectAction(int slotNumber)
     {
-        Debug.Log($"Selecting slot #{slotNumber - 1}");
+        ChangeSelectedSlotServerRpc(slotNumber);
     }
 
     private void InputProvider_OnUseAction()

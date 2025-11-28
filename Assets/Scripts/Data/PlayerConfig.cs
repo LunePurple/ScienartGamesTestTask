@@ -26,5 +26,7 @@ namespace Data
 
         [Header("Interaction")]
         public float InteractionDistance;
+        public int InventorySize;
+        
     }
 }

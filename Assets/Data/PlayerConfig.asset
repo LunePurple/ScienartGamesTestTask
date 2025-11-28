@@ -20,3 +20,4 @@ MonoBehaviour:
   LookRotationSpeedX: 75
   LookRotationSpeedY: 75
   InteractionDistance: 3
+  InventorySize: 2

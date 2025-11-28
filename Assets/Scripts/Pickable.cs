@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using Data;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,15 +8,15 @@ using UnityEngine;
 public class Pickable : NetworkBehaviour
 {
     [SerializeField] private WeaponData Data = null!;
-
-    public bool TryPickup(out WeaponData? data)
+    
+    public void AttemptPickup(Action<WeaponData> onPickup)
     {
+        onPickup(Data);
+        
         if (TryGetComponent(out NetworkObject networkObject))
         { 
             networkObject.Despawn();
+            Destroy(gameObject);
         }
-
-        data = Data;
-        return true;
     }
 }

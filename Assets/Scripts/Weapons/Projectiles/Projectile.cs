@@ -27,9 +27,8 @@ namespace Weapons.Projectiles
             {
                 DestroySelf();
             }
-
-            HandleMovement();
-            HandleAttack();
+            
+            HandleMoveAndHit();
         }
 
         public void Initialize(ProjectileData projectileData, LayerMask targetLayerMask, ulong attackerClientId)
@@ -41,12 +40,7 @@ namespace Weapons.Projectiles
             _attackerClientId = attackerClientId;
         }
 
-        private void HandleMovement()
-        {
-            transform.position += transform.forward * (_data!.MovementSpeed * Time.deltaTime);
-        }
-
-        private void HandleAttack()
+        private void HandleMoveAndHit()
         {
             Vector3 move = transform.forward * (_data!.MovementSpeed * Time.deltaTime);
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, move.magnitude,
@@ -63,6 +57,8 @@ namespace Weapons.Projectiles
 
                 DestroySelf();
             }
+            
+            transform.position += move;
         }
 
         private void DestroySelf()

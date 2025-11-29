@@ -15,5 +15,5 @@ MonoBehaviour:
   PickablePrefab: {fileID: 8817723177026894442, guid: bc17c997209da024cbcafcbe40ec5b75, type: 3}
   TargetLayerMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 4097
   ProjectileData: {fileID: 11400000, guid: 97e810694de2d1c4d890afde9ce1f05b, type: 2}

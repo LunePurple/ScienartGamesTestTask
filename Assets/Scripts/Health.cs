@@ -62,8 +62,6 @@ public class Health : NetworkBehaviour
     {
         if (_health.Value == 0) return;
 
-        Debug.Log($"Taking {damage} damage!");
-
         _health.Value = Math.Max(0, _health.Value - damage);
 
         if (!_isDead && _health.Value == 0)
@@ -74,8 +72,6 @@ public class Health : NetworkBehaviour
 
     private void DieServer()
     {
-        Debug.Log($"Client {OwnerClientId} died!");
-
         _isDead = true;
 
         NotifyPlayerDeathClientRpc(OwnerClientId);

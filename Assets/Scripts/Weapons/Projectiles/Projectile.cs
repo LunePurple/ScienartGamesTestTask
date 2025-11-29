@@ -56,8 +56,6 @@ namespace Weapons.Projectiles
                 {
                     if (health.NetworkObject.IsPlayerObject && health.OwnerClientId == _attackerClientId) return;
                     
-                    Debug.Log("Projectile attack!");
-                    
                     health.TakeDamageServer(Data.Damage);
                 }
 

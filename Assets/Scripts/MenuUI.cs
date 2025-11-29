@@ -10,7 +10,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private Button JoinGameButton = null!;
     [SerializeField] private Button ExitGameButton = null!;
 
-    private void Awake()
+    private void Start()
     {
         CreateGameButton.onClick.AddListener(OnCreateGameClicked);
         JoinGameButton.onClick.AddListener(OnJoinGameClicked);

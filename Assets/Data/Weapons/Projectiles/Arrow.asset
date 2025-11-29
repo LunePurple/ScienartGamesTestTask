@@ -15,4 +15,3 @@ MonoBehaviour:
   Prefab: {fileID: 6624817667049247820, guid: 33d27641769bf4540b8156aa347e0e19, type: 3}
   MovementSpeed: 15
   Damage: 10
-  AttackRadius: 0.2

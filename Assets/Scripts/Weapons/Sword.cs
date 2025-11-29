@@ -18,7 +18,8 @@ namespace Weapons
             Debug.Log("Sword attack!");
 
             SwordData swordData = (SwordData)Data;
-            int hitsNumber = Physics.OverlapSphereNonAlloc(holdPoint, swordData.AttackRadius, _hits,
+            Vector3 capsulePoint2 = holdPoint + lookDir * swordData.AttackDistance;
+            int hitsNumber = Physics.OverlapCapsuleNonAlloc(holdPoint, capsulePoint2, swordData.AttackRadius, _hits,
                 swordData.TargetLayerMask);
 
             for (int i = 0; i < hitsNumber; i++)

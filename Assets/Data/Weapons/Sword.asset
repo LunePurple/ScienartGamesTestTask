@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c75e44cace94dc990fb3c13fa50c2c0, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: Assembly-CSharp::Data.SwordData
+  PickablePrefab: {fileID: 8817723177026894442, guid: 77f1ad88a75087c489983154d143ba96, type: 3}
   TargetLayerMask:
     serializedVersion: 2
     m_Bits: 4096

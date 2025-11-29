@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5699f3c1118b4cc5ab9d86be59c4b8c5, type: 3}
   m_Name: Crossbow
   m_EditorClassIdentifier: Assembly-CSharp::Data.CrossbowData
+  PickablePrefab: {fileID: 8817723177026894442, guid: bc17c997209da024cbcafcbe40ec5b75, type: 3}
   TargetLayerMask:
     serializedVersion: 2
     m_Bits: 4096

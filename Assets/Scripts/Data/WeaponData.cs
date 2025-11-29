@@ -7,6 +7,7 @@ namespace Data
 {
     public abstract class WeaponData : ScriptableObject
     {
+        public GameObject PickablePrefab = null!;
         public LayerMask TargetLayerMask;
 
         public abstract Weapon CreateInstance();

@@ -1,26 +1,60 @@
 #nullable enable
 
+using System.Collections.Generic;
+using Data;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponSpawner : NetworkBehaviour
 {
-    [SerializeField] private Transform Prefab = null!;
-    [SerializeField] private Transform SpawnPoint = null!;
-    
-    [SerializeField] private Transform Prefab2 = null!;
-    [SerializeField] private Transform SpawnPoint2 = null!;
+    [SerializeField] private List<WeaponData> Weapons = new List<WeaponData>();
+    [SerializeField] private List<Transform> SpawnPoints = new List<Transform>();
+    [Space]
+    [SerializeField] private float FillPercent;
     
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
-            Transform testObject1 = Instantiate(Prefab, SpawnPoint.position, quaternion.identity);
-            testObject1.GetComponent<NetworkObject>().Spawn();
+            GameStateHandler.OnGameStateChanged += GameStateHandler_OnGameStateChanged;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsServer)
+        {
+            GameStateHandler.OnGameStateChanged -= GameStateHandler_OnGameStateChanged;
+        }
+    }
+
+    private void SpawnWeapons()
+    {
+        if (Weapons.Count == 0) return;
+
+        List<Transform> availablePoints = new List<Transform>(SpawnPoints);
+
+        int weaponsCount = Mathf.RoundToInt(availablePoints.Count * Mathf.Max(FillPercent, 1f));
+
+        for (int i = 0; i < weaponsCount; i++)
+        {
+            Transform point = availablePoints[Random.Range(0, availablePoints.Count)];
+            GameObject weaponPrefab = Weapons[Random.Range(0, Weapons.Count)].PickablePrefab;
             
-            Transform testObject2 = Instantiate(Prefab2, SpawnPoint2.position, quaternion.identity);
-            testObject2.GetComponent<NetworkObject>().Spawn();
+            GameObject spawnedObject = Instantiate(weaponPrefab, point.position, quaternion.identity);
+            spawnedObject.GetComponent<NetworkObject>().Spawn();
+
+            availablePoints.Remove(point);
+        }
+    }
+
+    private void GameStateHandler_OnGameStateChanged(GameStateHandler.GameState state)
+    {
+        if (state is GameStateHandler.GameState.Game)
+        {
+            SpawnWeapons();
         }
     }
 }

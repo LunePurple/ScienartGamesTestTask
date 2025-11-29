@@ -10,7 +10,12 @@ namespace Weapons.Projectiles
     {
         private const float LIFETIME_MAX = 10f;
         
-        private ProjectileData? _data;
+        [SerializeField] private ProjectileData ProjectileData = null!;
+
+        public ProjectileData Data => ProjectileData;
+
+        private SimpleProjectilePool? _pool;
+        
         private LayerMask _targetLayerMask;
         private ulong _attackerClientId;
 
@@ -31,18 +36,19 @@ namespace Weapons.Projectiles
             HandleMoveAndHit();
         }
 
-        public void Initialize(ProjectileData projectileData, LayerMask targetLayerMask, ulong attackerClientId)
+        public void Initialize(SimpleProjectilePool pool, LayerMask targetLayerMask, ulong attackerClientId)
         {
             _isInitialized = true;
+            _lifetime = 0f;
 
-            _data = projectileData;
+            _pool = pool;
             _targetLayerMask = targetLayerMask;
             _attackerClientId = attackerClientId;
         }
 
         private void HandleMoveAndHit()
         {
-            Vector3 move = transform.forward * (_data!.MovementSpeed * Time.deltaTime);
+            Vector3 move = transform.forward * (Data.MovementSpeed * Time.deltaTime);
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, move.magnitude,
                     _targetLayerMask))
             {
@@ -52,7 +58,7 @@ namespace Weapons.Projectiles
                     
                     Debug.Log("Projectile attack!");
                     
-                    health.TakeDamageServer(_data!.Damage);
+                    health.TakeDamageServer(Data.Damage);
                 }
 
                 DestroySelf();
@@ -63,8 +69,7 @@ namespace Weapons.Projectiles
 
         private void DestroySelf()
         {
-            NetworkObject.Despawn();
-            Destroy(gameObject);
+            _pool?.Release(this);
         }
     }
 }

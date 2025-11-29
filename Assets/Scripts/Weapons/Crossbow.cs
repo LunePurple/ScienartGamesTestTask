@@ -1,7 +1,7 @@
 #nullable enable
 
 using System;
-using Data;
+using Data.Weapons;
 using UnityEngine;
 using Weapons.Projectiles;
 

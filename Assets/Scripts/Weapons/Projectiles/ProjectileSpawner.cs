@@ -1,6 +1,6 @@
 #nullable enable
 
-using Data;
+using Data.Weapons.Projectiles;
 using UnityEngine;
 
 namespace Weapons.Projectiles

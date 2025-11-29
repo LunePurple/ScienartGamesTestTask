@@ -3,7 +3,7 @@
 using UnityEngine;
 using Weapons;
 
-namespace Data
+namespace Data.Weapons
 {
     public abstract class WeaponData : ScriptableObject
     {

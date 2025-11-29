@@ -1,9 +1,10 @@
 #nullable enable
 
+using Data.Weapons.Projectiles;
 using UnityEngine;
 using Weapons;
 
-namespace Data
+namespace Data.Weapons
 {
     [CreateAssetMenu(menuName = "Data/Weapons/CrossbowData", fileName = "newCrossbow")]
     public class CrossbowData : WeaponData

@@ -3,7 +3,7 @@
 using UnityEngine;
 using Weapons;
 
-namespace Data
+namespace Data.Weapons
 {
     [CreateAssetMenu(menuName = "Data/Weapons/SwordData", fileName = "newSword")]
     public class SwordData : WeaponData
